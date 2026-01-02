@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+#controls {
+    padding: 10px;
+    background: #f4f4f4;
+    text-align: center;
+}
+
+#controls input {
+    padding: 8px;
+    width: 260px;
+}
+
+#controls button {
+    padding: 8px 12px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#container {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+#map {
+    flex: 3;
+}
+
+#list {
+    flex: 1;
+    border-left: 1px solid #ccc;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+#list ul {
+    list-style: none;
+    padding: 0;
+}
+
+#list li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+#list li:hover {
+    background: #f0f0f0;
+}

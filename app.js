@@ -1,4 +1,4 @@
-let map = L.map("map").setView([23.0225, 72.5714], 13); // Default: Gujarat
+let map = L.map("map").setView([23.0225, 72.5714], 13); //Within Guj
 let markers = [];
 let baseLat, baseLon;
 
@@ -87,4 +87,5 @@ function getDistance(lat1, lon1, lat2, lon2) {
         Math.sin(dLon / 2) ** 2;
     return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
 }
+
 

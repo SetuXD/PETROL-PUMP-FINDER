@@ -6,7 +6,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors"
 }).addTo(map);
 
-// Search by place name
 function searchLocation() {
     const place = document.getElementById("locationInput").value;
     if (!place) return;
@@ -23,7 +22,6 @@ function searchLocation() {
         });
 }
 
-// Use GPS
 function useMyLocation() {
     navigator.geolocation.getCurrentPosition(pos => {
         baseLat = pos.coords.latitude;
@@ -33,7 +31,6 @@ function useMyLocation() {
     });
 }
 
-// Find petrol pumps using Overpass API
 function findPetrolPumps(lat, lon) {
     clearAll();
 
@@ -79,7 +76,6 @@ function clearAll() {
     markers = [];
 }
 
-// Haversine distance (km)
 function getDistance(lat1, lon1, lat2, lon2) {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -91,3 +87,4 @@ function getDistance(lat1, lon1, lat2, lon2) {
         Math.sin(dLon / 2) ** 2;
     return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
 }
+

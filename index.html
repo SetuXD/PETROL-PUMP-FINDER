@@ -3,31 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Petrol Pump Finder</title>
-    <link rel="stylesheet" href="style.css">
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-<div id="controls">
-    <input type="text" id="locationInput" placeholder="Enter city or place">
-    <button onclick="searchLocation()">Search</button>
-    <button onclick="useMyLocation()">Use My Location</button>
-</div>
-
-<div id="container">
-    <div id="map"></div>
-    <div id="list">
-        <h3>Nearby Public Petrol Pumps</h3>
-        <ul id="pumpList"></ul>
+<header class="topbar">
+    <div class="search-box">
+        <div class="input-wrapper">
+            <input type="text" id="locationInput" placeholder="Enter city or place..." autocomplete="off">
+            <div id="suggestions" class="suggestions hidden"></div>
+        </div>
+        <button id="searchBtn">Search</button>
+        <button id="locBtn" class="secondary">My Location</button>
     </div>
-</div>
+</header>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<main class="container">
+    <div id="map"></div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Nearby Pumps <span id="resultCount">(0)</span></h3>
+        </div>
+
+        <div id="loading" class="hidden">
+            ⏳ Searching for nearby pumps...
+        </div>
+        <div id="emptyState" class="hidden">
+            No petrol pumps found in this area.
+        </div>
+
+        <ul id="pumpList"></ul>
+    </aside>
+</main>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
-

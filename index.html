@@ -13,18 +13,30 @@
 <body>
 
 <header class="topbar">
-    <div class="search-box">
-        <div class="input-wrapper">
-            <input type="text" id="locationInput" placeholder="Enter city or place..." autocomplete="off">
+    <div class="search-container">
+        <div class="input-group">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="locationInput" placeholder="Search for a city or place..." autocomplete="off">
             <div id="suggestions" class="suggestions hidden"></div>
         </div>
-        <button id="searchBtn">Search</button>
-        <button id="locBtn" class="secondary">My Location</button>
+        <button id="searchBtn" class="primary-btn">Search</button>
+        <button id="locBtn" class="secondary-btn">My Location</button>
+        
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round">
+                    <span class="icon">🌙</span>
+                </div>
+            </label>
+        </div>
     </div>
 </header>
 
 <main class="container">
     <div id="map"></div>
+    
+    <button id="clearRouteBtn" class="hidden floating-btn">❌ Clear Route</button>
 
     <aside class="sidebar">
         <div class="sidebar-header">

@@ -1,13 +1,25 @@
 :root {
     --primary: #0984e3;
-    --primary-hover: #74b9ff;
+    --primary-hover: #0073cc;
     --dark: #2d3436;
+    
+    /* Light Mode Variables */
     --bg-color: #f5f6fa;
     --surface: #ffffff;
-    --text-main: #2d3436;
+    --text-main: #2d3436; 
     --text-muted: #636e72;
     --border: #dfe6e9;
-    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Dark Theme Variables */
+.dark-mode {
+    --bg-color: #121212;
+    --surface: #1e1e1e;
+    --text-main: #ffffff; 
+    --text-muted: #b0b0b0;
+    --border: #333333;
+    --shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 body {
@@ -15,83 +27,224 @@ body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg-color);
     color: var(--text-main);
-    overflow: hidden; /* Prevents whole page scrolling on desktop */
+    overflow: hidden;
+    transition: background 0.3s, color 0.3s;
 }
 
+/* --- ANIMATED TOPBAR UI --- */
 .topbar {
-    padding: 16px 24px;
+    padding: 12px 24px;
     background: var(--surface);
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     position: relative;
     z-index: 1000;
+    transition: background 0.3s;
 }
 
-.search-box {
+.search-container {
     display: flex;
     gap: 12px;
     align-items: center;
-    max-width: 800px;
+    max-width: 1050px;
     margin: 0 auto;
 }
 
-.input-wrapper {
+.input-group {
     position: relative;
     flex: 1;
 }
 
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
 input {
-    padding: 14px 16px;
+    padding: 12px 16px 12px 42px;
     width: 100%;
     box-sizing: border-box;
-    border-radius: 8px;
+    border-radius: 50px;
     border: 1px solid var(--border);
-    font-size: 16px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    font-size: 15px;
+    background: var(--bg-color);
+    color: var(--text-main);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
 }
 
 input:focus {
     outline: none;
+    background: var(--surface);
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.1);
+    box-shadow: 0 0 0 4px rgba(9, 132, 227, 0.15);
+    transform: scale(1.02);
 }
 
-button {
-    padding: 14px 20px;
-    border-radius: 8px;
+input:focus + .search-icon {
+    color: var(--primary);
+}
+
+/* Button UI & Animations */
+.primary-btn, .secondary-btn {
+    padding: 12px 22px;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
     background: var(--primary);
     color: white;
-    font-size: 15px;
-    font-weight: 600;
-    transition: background 0.3s, transform 0.1s;
 }
 
-button:hover {
-    background: #0073cc;
+.primary-btn:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 12px rgba(9, 132, 227, 0.3);
 }
 
-button:active {
-    transform: scale(0.98);
-}
-
-button.secondary {
+.secondary-btn {
     background: var(--dark);
+    color: white;
 }
 
-button.secondary:hover {
-    background: #1e2426;
+.secondary-btn:active {
+    transform: scale(0.95);
 }
 
+.loc-loading {
+    animation: pulse-animation 1.5s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* --- THEME TOGGLE SWITCH --- */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+    z-index: 2;
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.slider .icon {
+    font-size: 14px;
+    margin-left: 20px;
+    transition: 0.4s;
+    user-select: none;
+}
+
+input:checked + .slider .icon {
+    margin-left: -20px;
+    content: "☀️";
+}
+
+/* Suggestion Dropdown Animation */
+.suggestions {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 5px;
+    right: 5px;
+    background: var(--surface);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    border: 1px solid var(--border);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.suggestion-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s, padding-left 0.2s;
+    color: var(--text-main);
+}
+
+.suggestion-item:hover {
+    background: rgba(9, 132, 227, 0.05);
+    padding-left: 20px;
+    color: var(--primary);
+}
+
+/* --- ORIGINAL SIDEBAR UI --- */
 .container {
     display: flex;
-    height: calc(100vh - 74px);
+    height: calc(100vh - 70px);
+    position: relative; 
 }
 
-#map {
-    flex: 1;
-    z-index: 1;
-}
+#map { flex: 1; z-index: 1; }
 
 .sidebar {
     width: 380px;
@@ -101,12 +254,14 @@ button.secondary:hover {
     flex-direction: column;
     box-shadow: -2px 0 10px rgba(0,0,0,0.03);
     z-index: 2;
+    transition: background 0.3s;
 }
 
 .sidebar-header {
     padding: 20px;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
+    transition: background 0.3s;
 }
 
 .sidebar-header h3 {
@@ -143,20 +298,10 @@ button.secondary:hover {
     transition: background 0.2s;
 }
 
-#pumpList li:hover {
-    background: #f8f9fa;
-}
+#pumpList li:hover { background: rgba(9, 132, 227, 0.05); }
 
-.pump-info strong {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 4px;
-}
-
-.pump-info .distance {
-    font-size: 13px;
-    color: var(--text-muted);
-}
+.pump-info strong { display: block; font-size: 16px; margin-bottom: 4px; color: var(--text-main); }
+.pump-info .distance { font-size: 13px; color: var(--text-muted); }
 
 .go-icon {
     color: var(--primary);
@@ -170,37 +315,6 @@ button.secondary:hover {
     transform: translateX(0);
 }
 
-.suggestions {
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 1000;
-    border: 1px solid var(--border);
-}
-
-.suggestion-item {
-    padding: 14px 16px;
-    cursor: pointer;
-    font-size: 14px;
-    border-bottom: 1px solid #f1f2f6;
-}
-
-.suggestion-item:last-child {
-    border-bottom: none;
-}
-
-.suggestion-item:hover,
-.suggestion-item.active {
-    background: rgba(9, 132, 227, 0.05);
-    color: var(--primary);
-}
-
 #loading, #emptyState {
     padding: 30px 20px;
     text-align: center;
@@ -208,11 +322,8 @@ button.secondary:hover {
     font-size: 15px;
 }
 
-.hidden {
-    display: none !important;
-}
+.hidden { display: none !important; }
 
-/* Custom map marker styling */
 .custom-marker {
     background: white;
     border: 2px solid var(--primary);
@@ -225,6 +336,7 @@ button.secondary:hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     font-size: 18px;
     position: relative;
+    color: #2d3436; 
 }
 
 .custom-marker::after {
@@ -240,25 +352,149 @@ button.secondary:hover {
     border-top: 8px solid var(--primary);
 }
 
+/* --- FLOATING BUTTON --- */
+.floating-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    z-index: 1000;
+    background: #ff7675;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.floating-btn:hover {
+    background: #d63031;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* --- CALCULATING TOOLTIP WITH TIMER --- */
+.calculating-tooltip {
+    background-color: var(--dark);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    padding: 8px 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.calculating-tooltip::before {
+    display: none; 
+}
+
+.dark-mode .calculating-tooltip {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+/* --- LEAFLET ROUTING MACHINE RESPONSIVE SIZING --- */
+.leaflet-routing-container {
+    width: 320px !important;
+    max-width: 90vw !important; 
+    max-height: 45vh !important; 
+    overflow-y: auto !important; 
+    font-size: 13px !important;
+    border-radius: 12px !important;
+    padding: 24px 8px 8px 8px !important; 
+    position: relative;
+}
+
+.fade-in-box {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.leaflet-routing-container h2,
+.leaflet-routing-container h3 {
+    font-size: 15px !important;
+    margin-top: 5px !important;
+}
+
+/* THE CLOSE BUTTON INSIDE ROUTING BOX */
+.close-routing-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+    background: rgba(214, 48, 49, 0.1);
+    color: #d63031;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 9999;
+    transition: all 0.2s;
+}
+
+.close-routing-btn:hover {
+    background: #d63031;
+    color: white;
+}
+
+/* Mobile Adjustments for Routing Box & General Layout */
 @media (max-width: 900px) {
-    .container {
-        flex-direction: column;
+    .container { flex-direction: column; }
+    .sidebar { width: 100%; height: 45vh; border-left: none; border-top: 1px solid var(--border); }
+    .search-container { flex-wrap: wrap; justify-content: center; }
+    .input-group { flex-basis: 100%; }
+    .primary-btn, .secondary-btn { flex: 1; }
+    
+    .floating-btn {
+        bottom: calc(45vh + 20px); 
     }
 
-    .sidebar {
-        width: 100%;
-        height: 45vh;
-        border-left: none;
-        border-top: 1px solid var(--border);
-        box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+    .leaflet-routing-container {
+        width: 260px !important;
+        max-height: 35vh !important;
+        font-size: 12px !important;
+        margin-bottom: 20px !important;
     }
+}
 
-    .search-box {
-        flex-direction: column;
-        align-items: stretch;
-    }
+/* --- LEAFLET ROUTING MACHINE DARK MODE FIXES --- */
+.dark-mode .leaflet-routing-container {
+    background-color: var(--surface);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
 
-    button {
-        width: 100%;
-    }
+.dark-mode .leaflet-routing-alt {
+    background-color: var(--surface);
+    color: var(--text-main);
+}
+
+.dark-mode .leaflet-routing-alt tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .leaflet-routing-alt td {
+    color: var(--text-main);
+}
+
+.dark-mode .leaflet-routing-alt h2, 
+.dark-mode .leaflet-routing-alt h3 {
+    color: var(--text-main);
+}
+
+.dark-mode .leaflet-routing-icon {
+    filter: invert(1);
 }
